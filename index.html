@@ -1,131 +1,128 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>STALK — OSINT-приложение</title>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>STALK — OSINT‐приложение</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
-  <script src="https://unpkg.com/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
-    .no-scrollbar::-webkit-scrollbar {display: none;}
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',sans-serif;background:#000;color:#fff;overflow-x:hidden}
+    #hero{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;z-index:50}
+    .glitch{position:relative;font-size:8vw;font-weight:900;text-transform:uppercase;animation:flicker 3s linear infinite}
+    .glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0}
+    .glitch::before{color:#0ff;animation:glitchTop 2s infinite;opacity:.8}
+    .glitch::after{color:#f0f;animation:glitchBottom 3s infinite;opacity:.8}
+    @keyframes flicker{0%,18%,22%,25%,53%,57%,100%{opacity:1}20%,24%,55%{opacity:.4}}
+    @keyframes glitchTop{0%{transform:translate(0)}20%{transform:translate(-3px,-3px)}40%{transform:translate(-3px,3px)}60%{transform:translate(3px,-3px)}80%{transform:translate(3px,3px)}100%{transform:translate(0)}}
+    @keyframes glitchBottom{0%{transform:translate(0)}20%{transform:translate(3px,3px)}40%{transform:translate(-3px,3px)}60%{transform:translate(3px,-3px)}80%{transform:translate(-3px,-3px)}100%{transform:translate(0)}}
+    .subtitle{margin-top:1rem;font-size:2vw;opacity:0;animation:fadeIn 2s ease-out 1s forwards}
+    .btn-hero{margin-top:2rem;padding:.75rem 2rem;font-size:1.25vw;font-weight:700;background:#0ff;color:#000;border-radius:.5rem;opacity:0;animation:fadeIn 2s ease-out 2.5s forwards;transition:box-shadow .3s}
+    .btn-hero:hover{box-shadow:0 0 1rem #0ff}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    #main{display:none;opacity:0;transition:opacity 1s ease-out}
   </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans">
-  <nav class="fixed top-0 left-0 right-0 bg-gray-800 shadow z-50">
-    <div class="max-w-7xl mx-auto px-6 flex items-center h-16">
-      <a href="#" class="text-2xl font-bold text-white mr-8">STALK</a>
-      <div class="space-x-6">
-        <a href="#features" class="hover:text-white text-gray-400">Функции</a>
-        <a href="#screenshots" class="hover:text-white text-gray-400">Скриншоты</a>
-        <a href="#download" class="hover:text-white text-gray-400">Скачать</a>
-        <a href="#faq" class="hover:text-white text-gray-400">FAQ</a>
-        <a href="#contact" class="hover:text-white text-gray-400">Контакты</a>
-      </div>
-    </div>
-  </nav>
+<body>
+  <div id="hero">
+    <h1 class="glitch" data-text="STΛLK">STΛLK</h1>
+    <div class="subtitle">Универсальное OSINT-приложение</div>
+    <button class="btn-hero" onclick="showMain()">Скачать</button>
+  </div>
 
-  <header class="pt-24 pb-32 text-center bg-gradient-to-br from-blue-600 to-purple-600">
-    <h1 class="text-5xl font-extrabold mb-4">STALK</h1>
-    <p class="text-xl mb-8">Универсальное OSINT-приложение для поиска и аналитики</p>
-    <a href="#download" class="px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg shadow-lg hover:bg-gray-100 transition">Скачать бесплатно</a>
-  </header>
-
-  <main class="max-w-6xl mx-auto px-6 -mt-16">
-
-    <section id="features" class="bg-gray-800 rounded-xl p-8 shadow-lg">
-      <h2 class="text-3xl font-bold mb-6 text-center">Функции</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <h3 class="font-semibold text-2xl mb-2">Поиск по базам</h3>
-          <p>Мгновенный поиск по десяткам открытых и коммерческих источников.</p>
-        </div>
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <h3 class="font-semibold text-2xl mb-2">Граф связей</h3>
-          <p>Визуализация связей между людьми, организациями и доменами.</p>
-        </div>
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <h3 class="font-semibold text-2xl mb-2">Таймлайн</h3>
-          <p>Хронологическое отображение событий для любого субъекта.</p>
-        </div>
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <h3 class="font-semibold text-2xl mb-2">Отчёты</h3>
-          <p>Локальная история поиска, экспорт в текстовые файлы и заметки.</p>
-        </div>
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <h3 class="font-semibold text-2xl mb-2">IP & Домены</h3>
-          <p>Анализ Whois, геолокация и репутация IP-адресов и доменов.</p>
-        </div>
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <h3 class="font-semibold text-2xl mb-2">Настройки</h3>
-          <p>Гибкая конфигурация прокси, тайм-аута и параметров UI.</p>
+  <div id="main">
+    <nav class="fixed top-0 left-0 right-0 bg-gray-900/90 backdrop-blur z-40">
+      <div class="max-w-6xl mx-auto flex items-center h-16 px-6">
+        <span class="text-2xl font-bold">STALK</span>
+        <div class="ml-auto space-x-6 text-gray-400">
+          <a href="#features" class="hover:text-white">Функции</a>
+          <a href="#screenshots" class="hover:text-white">Скриншоты</a>
+          <a href="#download" class="hover:text-white">Скачать</a>
+          <a href="#faq" class="hover:text-white">FAQ</a>
+          <a href="#contact" class="hover:text-white">Контакты</a>
         </div>
       </div>
-    </section>
+    </nav>
 
-    <section id="screenshots" class="mt-16">
-      <h2 class="text-3xl font-bold mb-6 text-center">Скриншоты</h2>
-      <div class="swiper no-scrollbar">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="screenshots/search.png" class="rounded-lg shadow-lg" alt="Поиск"/></div>
-          <div class="swiper-slide"><img src="screenshots/graph.png" class="rounded-lg shadow-lg" alt="Граф"/></div>
-          <div class="swiper-slide"><img src="screenshots/timeline.png" class="rounded-lg shadow-lg" alt="Таймлайн"/></div>
-          <div class="swiper-slide"><img src="screenshots/reports.png" class="rounded-lg shadow-lg" alt="Отчёты"/></div>
+    <header class="pt-20 pb-12 bg-gradient-to-br from-blue-800 to-purple-800 text-center">
+      <h2 class="text-4xl md:text-5xl font-extrabold">Добро пожаловать в STALK</h2>
+      <p class="mt-4 text-lg md:text-xl text-gray-200">Все инструменты OSINT в одной программе</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-12 space-y-16">
+
+      <section id="features">
+        <h3 class="text-3xl font-bold mb-8 text-center">Функции</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">Поиск по множеству баз</div>
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">Граф связей</div>
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">Таймлайн событий</div>
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">Локальная история и отчёты</div>
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">IP & домены</div>
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">Гибкие настройки</div>
         </div>
-        <div class="swiper-pagination"></div>
-      </div>
-    </section>
+      </section>
 
-    <section id="download" class="mt-16 bg-gray-800 rounded-xl p-8 shadow-lg text-center">
-      <h2 class="text-3xl font-bold mb-6">Скачать</h2>
-      <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <a href="https://github.com/YourGithubUser/STALK-ui/releases/download/v1.0.0/STALK-setup.exe" class="btn px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-500 transition">Windows (EXE)</a>
-        <a href="https://github.com/YourGithubUser/STALK-ui/releases/download/v1.0.0/STALK.dmg" class="btn px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-500 transition">macOS (DMG)</a>
-        <a href="https://github.com/YourGithubUser/STALK-ui/releases/download/v1.0.0/STALK.AppImage" class="btn px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-500 transition">Linux (AppImage)</a>
-      </div>
-    </section>
+      <section id="screenshots">
+        <h3 class="text-3xl font-bold mb-8 text-center">Скриншоты</h3>
+        <div class="swiper rounded-lg overflow-hidden">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="screenshots/search.png" alt="" class="w-full"/></div>
+            <div class="swiper-slide"><img src="screenshots/graph.png" alt="" class="w-full"/></div>
+            <div class="swiper-slide"><img src="screenshots/timeline.png" alt="" class="w-full"/></div>
+            <div class="swiper-slide"><img src="screenshots/reports.png" alt="" class="w-full"/></div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </section>
 
-    <section id="faq" class="mt-16 bg-gray-800 rounded-xl p-8 shadow-lg" x-data="{ open: null }">
-      <h2 class="text-3xl font-bold mb-6 text-center">Часто задаваемые вопросы</h2>
-      <div class="space-y-4">
+      <section id="download" class="text-center">
+        <h3 class="text-3xl font-bold mb-6">Скачать</h3>
+        <div class="flex flex-col sm:flex-row justify-center gap-6">
+          <a href="https://github.com/YourGithubUser/STALK-ui/releases/latest/download/STALK-setup.exe" class="px-8 py-4 bg-cyan-400 text-black font-semibold rounded-lg hover:bg-cyan-300 transition">Windows (EXE)</a>
+          <a href="https://github.com/YourGithubUser/STALK-ui/releases/latest/download/STALK.dmg" class="px-8 py-4 bg-cyan-400 text-black font-semibold rounded-lg hover:bg-cyan-300 transition">macOS (DMG)</a>
+          <a href="https://github.com/YourGithubUser/STALK-ui/releases/latest/download/STALK.AppImage" class="px-8 py-4 bg-cyan-400 text-black font-semibold rounded-lg hover:bg-cyan-300 transition">Linux (AppImage)</a>
+        </div>
+      </section>
+
+      <section id="faq" x-data="{ open: null }" class="space-y-4">
+        <h3 class="text-3xl font-bold mb-4 text-center">FAQ</h3>
         <div>
-          <button @click="open===1 ? open = null : open = 1" class="w-full text-left flex justify-between items-center p-4 bg-gray-700 rounded-lg">
-            <span>Как установить STALK?</span>
-            <svg :class="{'transform rotate-180': open===1}" class="w-6 h-6 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
+          <button @click="open===1?open=null:open=1" class="w-full text-left bg-gray-800 p-4 rounded-lg flex justify-between items-center">
+            Как установить?
+            <svg :class="open===1?'rotate-180':''" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div x-show="open===1" class="p-4 bg-gray-600 rounded-b-lg">Скачайте EXE или DMG и запустите установщик. Следуйте инструкциям мастера.</div>
+          <div x-show="open===1" class="p-4 bg-gray-700 rounded-b-lg">Скачайте установщик и запустите его. Следуйте инструкциям мастера.</div>
         </div>
         <div>
-          <button @click="open===2 ? open = null : open = 2" class="w-full text-left flex justify-between items-center p-4 bg-gray-700 rounded-lg">
-            <span>Какие источники поддерживаются?</span>
-            <svg :class="{'transform rotate-180': open===2}" class="w-6 h-6 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
+          <button @click="open===2?open=null:open=2" class="w-full text-left bg-gray-800 p-4 rounded-lg flex justify-between items-center">
+            Поддерживаемые источники?
+            <svg :class="open===2?'rotate-180':''" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div x-show="open===2" class="p-4 bg-gray-600 rounded-b-lg">OpenStreetMap, Wikidata, WHOIS, базы Telegram, GitHub и ваше API.</div>
+          <div x-show="open===2" class="p-4 bg-gray-700 rounded-b-lg">Telegram, Whois, GitHub, OSM, Wikidata и другие.</div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="contact" class="mt-16 text-center pb-16">
-      <h2 class="text-3xl font-bold mb-4">Контакты</h2>
-      <p><a href="https://github.com/YourGithubUser/STALK-ui" class="text-blue-400 hover:underline">GitHub</a></p>
-      <p class="mt-2 text-gray-500">© 2025 STALK. Все права защищены.</p>
-    </section>
+      <section id="contact" class="text-center">
+        <h3 class="text-3xl font-bold mb-4">Контакты</h3>
+        <p><a href="https://github.com/YourGithubUser/STALK-ui" class="text-cyan-400 hover:underline">GitHub: STALK-ui</a></p>
+        <p class="mt-4 text-gray-500">© 2025 STALK</p>
+      </section>
 
-  </main>
+    </main>
+  </div>
 
   <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
   <script>
-    const swiper = new Swiper('.swiper', {
-      loop: true,
-      pagination: { el: '.swiper-pagination', clickable: true },
-      slidesPerView: 1,
-      spaceBetween: 20,
-      breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+    function showMain(){
+      document.getElementById('hero').style.display='none';
+      const m = document.getElementById('main');
+      m.style.display='block';
+      setTimeout(()=>m.style.opacity=1,50);
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+      new Swiper('.swiper',{loop:true,pagination:{el:'.swiper-pagination',clickable:true},slidesPerView:1,spaceBetween:20,breakpoints:{640:{slidesPerView:2},1024:{slidesPerView:3}}});
     });
   </script>
 </body>
