@@ -1,11 +1,9 @@
-/* style.css */
 body {
   margin: 0;
   padding: 0;
   background-color: #0d0d0d;
-  color: #e0e0e0;
+  color: #ffffff;
   font-family: 'Segoe UI', sans-serif;
-  overflow-x: hidden;
 }
 
 .container {
@@ -15,16 +13,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: fadeIn 1s ease;
 }
 
 h1 {
   font-size: 28px;
   text-align: center;
   margin-bottom: 32px;
-  color: #6fa8ff;
+  color: white;
   letter-spacing: 1px;
-  text-shadow: 0 0 10px rgba(111, 168, 255, 0.5);
 }
 
 .input-group {
@@ -43,7 +39,6 @@ input[type="text"] {
   border-radius: 4px;
   background-color: #1c1c1c;
   color: white;
-  box-shadow: 0 0 5px rgba(111, 168, 255, 0.2);
 }
 
 button {
@@ -54,13 +49,11 @@ button {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  white-space: nowrap;
+  transition: background 0.3s ease;
 }
 
 button:hover {
   background: #1e5ddb;
-  transform: scale(1.03);
 }
 
 .result {
@@ -75,22 +68,17 @@ button:hover {
   padding: 16px;
   background: #1a1a1a;
   border-radius: 6px;
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  opacity: 0;
-  animation: fadeIn 0.5s ease forwards;
+  transition: transform 0.2s ease;
 }
 
 .entry:hover {
   transform: scale(1.01);
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
 }
 
 .entry h3 {
   margin: 0 0 8px;
   font-size: 18px;
-  color: #6fa8ff;
-  text-shadow: 0 0 5px rgba(111, 168, 255, 0.3);
+  color: #ffffff;
 }
 
 .entry p {
@@ -99,60 +87,18 @@ button:hover {
   line-height: 1.4;
 }
 
-/* Интро */
-.intro-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #000000;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.5s ease;
-}
-
-.intro-text {
-  font-size: 42px;
-  color: #2f7aff;
-  font-weight: bold;
-  letter-spacing: 2px;
-  animation: pulse 1.5s ease infinite;
-  text-shadow: 0 0 20px #2f7aff;
-}
-
-.intro-screen.fade-out {
-  animation: fadeOut 1s ease forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
 @media (max-width: 600px) {
   .container {
     margin: 20px auto;
     padding: 0 12px;
   }
+
   .input-group {
     flex-direction: column;
     gap: 12px;
   }
+
   button {
     width: 100%;
   }
 }
-
