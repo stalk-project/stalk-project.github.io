@@ -1,0 +1,24 @@
+/* style.css */ body { margin: 0; padding: 0; background-color: #0d0d0d; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; }
+
+.container { max-width: 800px; margin: 60px auto; padding: 0 16px; }
+
+h1 { font-size: 24px; text-align: center; margin-bottom: 24px; }
+
+input[type="text"] { width: 100%; padding: 12px; font-size: 16px; border: none; border-radius: 4px; margin-bottom: 16px; background-color: #1c1c1c; color: white; }
+
+button { width: 100%; padding: 12px; background: #2f7aff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s ease; }
+
+button:hover { background: #1e5ddb; }
+
+.result { border-top: 1px solid #444; margin-top: 16px; padding-top: 16px; }
+
+.entry { margin-bottom: 12px; padding: 16px; background: #1a1a1a; border-radius: 6px; box-shadow: 0 0 8px rgba(0, 255, 255, 0.1); transition: transform 0.2s ease; }
+
+.entry:hover { transform: scale(1.01); }
+
+.entry h3 { margin: 0 0 8px; font-size: 18px; color: #6fa8ff; }
+
+.entry p { margin: 2px 0; font-size: 15px; line-height: 1.4; }
+
+@media (max-width: 600px) { .container { margin: 20px auto; } h1 { font-size: 20px; } }
+
