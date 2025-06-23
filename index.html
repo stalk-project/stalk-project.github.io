@@ -1,15 +1,31 @@
-<!-- index.html --><!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STALK-lite</title>
-  <link rel="stylesheet" href="style.css">
+  <title>STALK</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+    };
+  </script>
 </head>
-<body>
-  <div class="container">
-    <h1>STALK</h1>
-    <input type="text" id="query" placeholder="Введите запрос...">
-    <button onclick="search()">Поиск</button>
-    <div id="results" class="result"></div>
-  </div>  <script src="main.js"></script></body>
+<body class="bg-gray-900 text-white min-h-screen">
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold text-center text-white mb-10 tracking-wide">STALK</h1>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+      <input id="query" type="text" placeholder="Введите запрос..." class="w-full sm:w-96 px-4 py-3 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" />
+      <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition" onclick="search()">Поиск</button>
+    </div>
+
+    <div id="results" class="space-y-4">
+      <!-- Результаты -->
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
 </html>
