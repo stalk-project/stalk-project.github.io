@@ -1,143 +1,206 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>STALK — Glitch Horror Landing</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STALK-lite</title>
   <style>
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
-
-    /* Фоновое видео помех */
-    #bgVideo {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: grayscale(1) contrast(1.2) brightness(0.6);
-      z-index: 1;
-    }
-    /* Полупрозрачный чёрный слой */
-    #overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 2;
-    }
-
-    /* Центрированный контейнер */
-    .container {
-      position: relative;
-      z-index: 3;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #0d0d0d;
+      color: #e0e0e0;
       font-family: 'Segoe UI', sans-serif;
     }
-
-    /* Glitch-текст */
-    .glitch {
-      position: relative;
-      font-size: 8vw;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      animation: flicker 3s linear infinite;
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 0 16px;
     }
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      opacity: .8;
+    h1 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 24px;
     }
-    .glitch::before {
-      left: 2px; text-shadow: -2px 0 cyan;
-      clip: rect(20px, 9999px, 80px, 0);
-      animation: glitchTop 2s infinite linear alternate-reverse;
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      background-color: #1c1c1c;
+      color: white;
     }
-    .glitch::after {
-      left: -2px; text-shadow: -2px 0 magenta;
-      clip: rect(100px, 9999px, 140px, 0);
-      animation: glitchBottom 3s infinite linear alternate-reverse;
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2f7aff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
     }
-
-    @keyframes flicker {
-      0%, 22%, 44%, 66%, 88%, 100% { opacity: 1; }
-      11%, 33%, 55%, 77%, 99% { opacity: 0.4; }
+    .result {
+      border-top: 1px solid #444;
+      margin-top: 16px;
+      padding-top: 16px;
     }
-    @keyframes glitchTop {
-      0% { clip: rect(10px, 9999px, 50px, 0); transform: translate(0); }
-      20% { clip: rect(80px, 9999px, 120px, 0); transform: translate(-5px, -3px); }
-      40% { clip: rect(30px, 9999px, 60px, 0); transform: translate(5px, 2px); }
-      60% { clip: rect(100px, 9999px, 140px, 0); transform: translate(-5px, 3px); }
-      80% { clip: rect(50px, 9999px, 90px, 0); transform: translate(5px, -2px); }
-      100% { clip: rect(10px, 9999px, 50px, 0); transform: translate(0); }
+    .entry {
+      margin-bottom: 12px;
+      padding: 12px;
+      background: #1a1a1a;
+      border-radius: 6px;
     }
-    @keyframes glitchBottom {
-      0% { clip: rect(60px, 9999px, 100px, 0); transform: translate(0); }
-      20% { clip: rect(130px, 9999px, 170px, 0); transform: translate(5px, 3px); }
-      40% { clip: rect(90px, 9999px, 130px, 0); transform: translate(-5px, -2px); }
-      60% { clip: rect(150px, 9999px, 190px, 0); transform: translate(5px, -3px); }
-      80% { clip: rect(110px, 9999px, 150px, 0); transform: translate(-5px, 2px); }
-      100% { clip: rect(60px, 9999px, 100px, 0); transform: translate(0); }
+    .entry h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #6fa8ff;
     }
-
-    /* Подзаголовок */
-    .subtitle {
-      margin-top: 1rem;
-      font-size: 2vw;
-      opacity: 0;
-      animation: fadeIn 2s ease-out 1s forwards;
+    .entry p {
+      margin: 2px 0;
     }
-
-    /* Кнопка */
-    .btn-hero {
-      margin-top: 2rem;
-      padding: .8rem 2rem;
-      font-size: 1.2vw;
-      font-weight: 700;
-      color: #000;
-      background: cyan;
-      border-radius: .5rem;
-      opacity: 0;
-      animation: fadeIn 2s ease-out 2.5s forwards, flickerBtn 1.5s infinite;
-      text-decoration: none;
-      display: inline-block;
-      box-shadow: 0 0 10px cyan;
-      transition: box-shadow .3s;
-    }
-    .btn-hero:hover {
-      box-shadow: 0 0 20px cyan;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes flickerBtn {
-      0%, 24%, 55%, 100% { opacity: 1; }
-      25%, 50%, 75%      { opacity: 0.6; }
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px auto;
+      }
+      h1 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Фоновое видео помех (поместите рядом noise.mp4) -->
-  <video id="bgVideo" src="noise.mp4" autoplay loop muted playsinline></video>
-  <div id="overlay"></div>
-
-  <!-- Glitch-контент -->
   <div class="container">
-    <div class="glitch" data-text="STΛLK">STΛLK</div>
-    <div class="subtitle">Погрузись в мир OSINT</div>
-    <a href="#" class="btn-hero">Скачать</a>
-  </div>
-</body>
+    <h1>STALK-lite</h1>
+    <input type="text" id="query" placeholder="Введите запрос...">
+    <button onclick="search()">Поиск</button>
+    <div id="results" class="result"></div>
+  </div>  <script>
+    const schemas = {
+      telegrampt1: [
+        { key: "Telegram ID", label: "ID" },
+        { key: "Номер телефона", label: "Номер телефона" },
+        { key: "Username", label: "Юзернейм" },
+        { key: "Имя", label: "Имя" }
+      ],
+      telegrampt2: [
+        { key: "Telegram ID", label: "ID" },
+        { key: "Номер телефона", label: "Номер телефона" },
+        { key: "Username", label: "Юзернейм" },
+        { key: "Имя", label: "Имя" }
+      ],
+      telegrampt3: [
+        { key: "Telegram ID", label: "ID" },
+        { key: "Номер телефона", label: "Номер телефона" },
+        { key: "username", label: "Юзернейм" },
+        { key: "Имя", label: "Имя" }
+      ],
+      telegrampt4: [
+        { key: "Telegram ID", label: "ID" },
+        { key: "Имя", label: "Имя" },
+        { key: "Фамилия", label: "Фамилия" },
+        { key: "Почта", label: "Почта" },
+        { key: "Номер телефона", label: "Номер телефона" }
+      ],
+      telegrampt5: [
+        { key: "string_field_0", label: "ID" },
+        { key: "string_field_1", label: "Номер телефона" }
+      ],
+      bolshayaperemena: [
+        { key: "string_field_0", label: "Фамилия" },
+        { key: "string_field_1", label: "Имя" },
+        { key: "string_field_2", label: "Отчество" },
+        { key: "string_field_3", label: "Дата рождения" },
+        { key: "string_field_4", label: "Телефон" },
+        { key: "string_field_5", label: "Почта" },
+        { key: "string_field_6", label: "Буква класса" },
+        { key: "string_field_7", label: "Адрес уч.заведения" }
+      ],
+      vtbclients: [
+        { key: "Фамилия", label: "Фамилия" },
+        { key: "Имя", label: "Имя" },
+        { key: "Отчество", label: "Отчество" },
+        { key: "Дата рождения", label: "Дата рождения" },
+        { key: "Местоположение", label: "Местоположение" },
+        { key: "Номер телефона", label: "Номер телефона" },
+        { key: "Почта", label: "Почта" }
+      ],
+      zonatelecom: [
+        { key: "Фамилия", label: "Фамилия" },
+        { key: "Имя", label: "Имя" },
+        { key: "Номер телефона", label: "Номер телефона" },
+        { key: "Адрес", label: "Адрес" },
+        { key: "Почта", label: "Почта" },
+        { key: "Контактный телефон", label: "Контактный телефон" }
+      ],
+      medicine_and_pharmacy: [
+        { key: "ФИО", label: "ФИО" },
+        { key: "Номер телефона", label: "Номер телефона" },
+        { key: "Город", label: "Город" },
+        { key: "Дата рождения", label: "Дата рождения" },
+        { key: "ИНН", label: "ИНН" }
+      ],
+      RussianCitizens2025: [
+        { key: "Номер телефона", label: "Номер телефона" },
+        { key: "ФИО", label: "ФИО" },
+        { key: "Дата рождения", label: "Дата рождения" },
+        { key: "ИНН", label: "ИНН" }
+      ]
+    };
+
+    const dbTitles = {
+      telegrampt1: "Telegram",
+      telegrampt2: "Telegram",
+      telegrampt3: "Telegram",
+      telegrampt4: "Telegram",
+      telegrampt5: "Telegram",
+      bolshayaperemena: "Большая перемена",
+      vtbclients: "Клиенты ВТБ",
+      zonatelecom: "Зона Телеком",
+      medicine_and_pharmacy: "Медицина и аптеки",
+      RussianCitizens2025: "Граждане РФ 2025"
+    };
+
+    async function search() {
+      const q = document.getElementById('query').value.trim();
+      if (!q) return;
+      document.getElementById('results').innerHTML = '<p>Поиск...</p>';
+
+      const res = await fetch(`https://cloudsearch-131166517111.us-central1.run.app/multiSearch?q=${encodeURIComponent(q)}&limit=20`);
+      const data = await res.json();
+
+      const container = document.getElementById('results');
+      container.innerHTML = '';
+
+      data.forEach(entry => {
+        const db = entry.source || 'unknown';
+        const schema = schemas[db];
+        const dbName = dbTitles[db] || db;
+
+        const block = document.createElement('div');
+        block.className = 'entry';
+
+        const title = document.createElement('h3');
+        title.innerText = dbName + ' ↓';
+        block.appendChild(title);
+
+        if (schema) {
+          schema.forEach(f => {
+            if (entry[f.key]) {
+              const line = document.createElement('p');
+              line.innerText = `${f.label}: ${entry[f.key]}`;
+              block.appendChild(line);
+            }
+          });
+        } else {
+          const raw = document.createElement('pre');
+          raw.innerText = JSON.stringify(entry, null, 2);
+          block.appendChild(raw);
+        }
+
+        container.appendChild(block);
+      });
+    }
+  </script></body>
 </html>
