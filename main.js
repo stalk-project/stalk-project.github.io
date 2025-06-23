@@ -4,13 +4,15 @@ const schemas = { telegrampt1: [ { key: "Telegram ID", label: "ID" }, { key: "Н
 
 const dbTitles = { telegrampt1: "Telegram", telegrampt2: "Telegram", telegrampt3: "Telegram", telegrampt4: "Telegram", telegrampt5: "Telegram", bolshayaperemena: "Большая перемена", vtbclients: "Клиенты ВТБ", zonatelecom: "Зона Телеком", medicine_and_pharmacy: "Медицина и аптеки", RussianCitizens2025: "Граждане РФ 2025" };
 
-async function search() { const q = document.getElementById('query').value.trim(); const container = document.getElementById('results'); if (!q) return; container.innerHTML = '<p>Поиск...</p>';
+async function search() { const q = document.getElementById('query').value.trim(); const container = document.getElementById('results'); if (!q) { container.innerHTML = '<p style="color: orange">Введите запрос</p>'; return; } container.innerHTML = '<p style="color: cyan">Поиск...</p>';
 
-try { const res = await fetch(https://cloudsearch-131166517111.us-central1.run.app/multiSearch?q=${encodeURIComponent(q)}&limit=20); if (!res.ok) throw new Error("Ошибка ответа сервера"); const data = await res.json();
+try { const res = await fetch(https://cloudsearch-131166517111.us-central1.run.app/multiSearch?q=${encodeURIComponent(q)}&limit=20); if (!res.ok) throw new Error("Ошибка ответа сервера: " + res.status);
 
+const data = await res.json();
 container.innerHTML = '';
+
 if (!Array.isArray(data) || data.length === 0) {
-  container.innerHTML = '<p>Ничего не найдено.</p>';
+  container.innerHTML = '<p style="color: yellow">Ничего не найдено.</p>';
   return;
 }
 
@@ -43,5 +45,7 @@ data.forEach(entry => {
   container.appendChild(block);
 });
 
-} catch (error) { console.error("Ошибка при поиске:", error); container.innerHTML = '<p style="color:red">Произошла ошибка при поиске.</p>'; } }
+} catch (error) { container.innerHTML = '<p style="color:red">Ошибка при поиске: ' + error.message + '</p>'; } }
+
+document.addEventListener('DOMContentLoaded', () => { const button = document.querySelector('button'); if (button) button.addEventListener('click', search); });
 
